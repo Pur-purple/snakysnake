@@ -1,11 +1,12 @@
-import turtle, random, time
+import turtle, random, time, math
 
 #config
-gametime = 0
-preffps = 12
-step = 50
-maxapples = 2
-score = 1
+gametime = 0 #start time
+preffps = 10 #preffered fps
+step = 50 #how many step does turtle do for like anything
+maxapples = 5 #yk what is it
+score = 1 #start score
+hb = 37 #37 is perfect, 33 for funny gameplay
 
 fullsnake = []
 allapples = []
@@ -56,12 +57,12 @@ class Apple:
 def render():
     global fullsnake
     global gametime
-    global score               
+    global score
     #adding everything
-    if len(allapples) < maxapples:
+    while len(allapples) < maxapples:
         allapples.append(Apple(random.randrange(-450, 450, step), random.randrange(-350, 350, step)))
     try:        
-        if len(fullsnake) < score:
+        if len(fullsnake) < score+1:
             if i.rot == "up":
                 fullsnake.append(Snake(fullsnake[-1].x, fullsnake[-1].y - step, fullsnake[-1].rot))
             if i.rot == "down":
@@ -77,7 +78,7 @@ def render():
         fullsnake[i].y = fullsnake[i-1].y
     #eating mech
     for i in allapples:
-        if i.x == fullsnake[0].x and i.y == fullsnake[0].y:
+        if abs(i.x - fullsnake[0].x) < hb and abs(i.y - fullsnake[0].y) < hb: #i.x == fullsnake[0].x and i.y == fullsnake[0].y:
             allapples.pop(allapples.index(i))
             score += 1          
     #controlls
@@ -93,7 +94,7 @@ def render():
     if fullsnake[0].x > 450 or fullsnake[0].x < -450 or fullsnake[0].y > 400 or fullsnake[0].y < -400:
         turtle.bye()
     for i in reversed(range(1, len(fullsnake))):
-        if fullsnake[0].x == fullsnake[i].x and fullsnake[0].y == fullsnake[i].y:
+        if fullsnake[0].x == fullsnake[i].x and fullsnake[0].y == fullsnake[i].y: #abs(fullsnake[0].x - fullsnake[i].x) < hb and abs(fullsnake[0].y - fullsnake[i].y) < hb: 
             turtle.bye()
     gametime += 1
 
