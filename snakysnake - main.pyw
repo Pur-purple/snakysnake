@@ -7,10 +7,14 @@ step = 50 #how many step does turtle do for like anything
 maxapples = 5 #yk what is it
 score = 1 #start score
 hb = 37 #37 is perfect, 33 for funny gameplay
+bl = 500 #field border
 
 fullsnake = []
 allapples = []
 
+temp = []
+
+bhandler = turtle.Turtle()
 ahandler = turtle.Turtle()
 thandler = turtle.Turtle()
 shandler = turtle.Turtle()
@@ -35,6 +39,17 @@ shandler.shapesize(2)
 shandler.pu()
 shandler.ht()
 
+bhandler.pu()
+bhandler.ht()
+
+bhandler.goto(bl+25, bl+25)
+bhandler.pd()
+bhandler.goto(bl+25, bl+25)
+bhandler.goto(bl+25, -bl-25)
+bhandler.goto(-bl-25, -bl-25)
+bhandler.goto(-bl-25, bl+25)
+bhandler.goto(bl+25, bl+25)
+
 class Snake:
     def __init__(self, x, y, rot):
         self.x = x
@@ -55,12 +70,13 @@ class Apple:
         self.y = y
         
 def render():
+    global temp
     global fullsnake
     global gametime
     global score
     #adding everything
     while len(allapples) < maxapples:
-        allapples.append(Apple(random.randrange(-450, 450, step), random.randrange(-350, 350, step)))
+        allapples.append(Apple(random.randrange(-bl, bl, step), random.randrange(-bl, bl, step)))
     try:        
         if len(fullsnake) < score+1:
             if i.rot == "up":
@@ -78,7 +94,7 @@ def render():
         fullsnake[i].y = fullsnake[i-1].y
     #eating mech
     for i in allapples:
-        if abs(i.x - fullsnake[0].x) < hb and abs(i.y - fullsnake[0].y) < hb: #i.x == fullsnake[0].x and i.y == fullsnake[0].y:
+        if abs(i.x - fullsnake[0].x) < hb and abs(i.y - fullsnake[0].y) < hb:
             allapples.pop(allapples.index(i))
             score += 1          
     #controlls
@@ -91,10 +107,10 @@ def render():
     if fullsnake[0].rot == "left":
         fullsnake[0].goleft()
     #checking for death
-    if fullsnake[0].x > 450 or fullsnake[0].x < -450 or fullsnake[0].y > 400 or fullsnake[0].y < -400:
+    if fullsnake[0].x > bl or fullsnake[0].x < -bl or fullsnake[0].y > bl or fullsnake[0].y < -bl:
         turtle.bye()
     for i in reversed(range(1, len(fullsnake))):
-        if fullsnake[0].x == fullsnake[i].x and fullsnake[0].y == fullsnake[i].y: #abs(fullsnake[0].x - fullsnake[i].x) < hb and abs(fullsnake[0].y - fullsnake[i].y) < hb: 
+        if fullsnake[0].x == fullsnake[i].x and fullsnake[0].y == fullsnake[i].y:
             turtle.bye()
     gametime += 1
 
@@ -108,8 +124,8 @@ def update():
     for i in fullsnake:
         thandler.goto(i.x, i.y)
         thandler.stamp()
-    shandler.goto(-450, 350)
-    shandler.write(score, "right", font=("Arial", 30))
+    shandler.goto(-bl-75, 350)
+    shandler.write(score, "left", font=("Arial", 30))
     turtle.update()
 
 #controlls
@@ -135,4 +151,4 @@ turtle.listen()
 while True:
     render()
     update()
-    time.sleep(1/preffps)
+    time.sleep(1/(preffps+(score/15)))
