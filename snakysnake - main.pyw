@@ -1,9 +1,3 @@
-import turtle, random, time, math
-
-turtle.title("Snakysnake")
-turtle.tracer(0)
-
-
 #config
 
 #gameplay config
@@ -21,13 +15,23 @@ optimizationrate = 3
 nspeed = 0
 
 #game customization
-snakecolor = "green" #paste hex like that: "#285078"
+snakecolor = "green" # paste hex like that: "#285078"
 snakeshape = "square" # "square" "circle" "arrow" "classic"
-applecolor = "red" #paste hex like that: "#285078"
+applecolor = "red" # paste hex like that: "#285078"
 appleshape = "circle" # "square" "circle" "arrow" "classic" 
 
+bordercolor = "black" # paste hex like that: "#285078"
+backgroundcolor = "white" # hex.
+textcolor = "black" # hex!!
 
 #game code
+
+import turtle, random, time, math
+
+turtle.title("Snakysnake")
+turtle.bgcolor(backgroundcolor)
+
+turtle.tracer(0)
 
 canmove = True
 
@@ -49,10 +53,12 @@ ahand.color(applecolor)
 ahand.shape(appleshape)
 bhand.pu()
 bhand.ht()
+bhand.color(bordercolor)
 bhand.goto(br, br)
 scorehand.pu()
 scorehand.ht()
 mhand.ht()
+mhand.color(textcolor)
 mhand.pu()
 
 #controlls
