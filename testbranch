@@ -1,0 +1,55 @@
+import turtle, time, random, math
+
+#pre settings
+drawer = turtle.Turtle()
+drawer.ht()
+drawer.pu()
+
+#new classes :)
+class Vector:
+    def __init__(self, X, Y):
+        self.X = X
+        self.Y = Y
+        self.magnitude = math.sqrt(X**2 + Y**2)
+
+class Snake:
+    def __init__(self, pos, rot):
+        self.pos = pos
+        self.rot = rot
+
+class Apple:
+    def __init__(self, pos, rot):
+        self.pos = pos
+        self.rot = rot
+
+class Camera:
+    def __init__(self, pos):
+        self.pos = pos
+
+class Game:
+    def __init__(self):
+        print("initiated")
+    def update(self):
+        print("stateupdated")
+    def render(self):
+        print("rendered")
+
+#new functions
+
+def drawshape(x, y, rot, shape, color, size):
+    drawer.goto(x, y)
+    drawer.tiltangle(rot)
+    drawer.shape(shape)
+    drawer.color(color)
+    drawer.shapesize(size)
+    drawer.stamp()
+
+#math
+def normalize(vector):
+    vector.X = vector.X / vector.magnitude
+    vector.Y = vector.Y / vector.magnitude
+
+def lerp(a, b, t):
+    return a + (b - a) * t
+
+#main loop
